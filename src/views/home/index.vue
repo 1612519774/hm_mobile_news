@@ -1,14 +1,16 @@
 <template>
-<div>
-  <router-view></router-view>
+<div id="home_content">
+home页
 </div>
+
 </template>
 
 <script>
 export default {
+  name: 'home'
 }
 </script>
 
-<style lang="less" scoped>
+<style>
 
 </style>
