@@ -7,7 +7,7 @@
 
         <van-field v-model="user.code" label="密码" placeholder="请输入密码" required type="password"/>
       </van-cell-group>
-      <van-button type="info" block @click.prevent="handleLogin">登录</van-button>
+      <van-button type="info" block @click.prevent="handleLogin()">登录</van-button>
     </form>
   </div>
 </template>
@@ -24,19 +24,22 @@ export default {
     }
   },
   methods: {
-    handleLogin () {
+    async handleLogin () {
+      this.loading = true
+      const valid = await this.$validator.validate()
+      if (!valid) {
+        this.loading = false
+        return
+      }
       try {
-        
-        this.$validator.validate().then( async valid=>{
-          if(!valid){
-            return
-          }
-          const data = await login(this.user)
-           console.log(data)
-        })
+        const data = await login(this.form)
+        console.log(data)
+        this.$store.commit('saveUser', data)
+        this.$router.push({ path: '/' })
       } catch (error) {
         console.log(error)
       }
+      this.loading = false
     }
   }
 }
