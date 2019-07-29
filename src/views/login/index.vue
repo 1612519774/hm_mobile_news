@@ -32,7 +32,7 @@ export default {
         return
       }
       try {
-        const data = await login(this.form)
+        const data = await login(this.user)
         console.log(data)
         this.$store.commit('saveUser', data)
         this.$router.push({ path: '/' })

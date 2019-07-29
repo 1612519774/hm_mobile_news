@@ -12,7 +12,7 @@ const store = new Vuex.Store({
   /**
      * 登录成功，调用 mutation 更新容器中的 user 的状态
      */
-  mutations: {
+  mutation: {
     setUser (state, data) {
       // 修改state
       state.user = data
