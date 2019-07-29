@@ -3,11 +3,11 @@
     <van-nav-bar title="欢迎" />
     <form action="/" method="post">
       <van-cell-group>
-        <van-field v-model="user.mobile" label="手机号" placeholder="请输入手机号" required/>
+         <van-field v-validate="'required|mobile'" name="phone" :error-message="errors.first('phone')"  v-model="user.mobile" required label="手机号" placeholder="请输入手机号"/>
 
         <van-field v-model="user.code" label="密码" placeholder="请输入密码" required type="password"/>
       </van-cell-group>
-      <van-button type="info" block @click.prevent="handleLogin()">登录</van-button>
+      <van-button type="info" block @click.prevent="handleLogin">登录</van-button>
     </form>
   </div>
 </template>
@@ -24,11 +24,16 @@ export default {
     }
   },
   methods: {
-    async handleLogin () {
+    handleLogin () {
       try {
-        const data = await login(this.user)
-        console.log(data)
-        this.$store.commit('setUser', data)
+        
+        this.$validator.validate().then( async valid=>{
+          if(!valid){
+            return
+          }
+          const data = await login(this.user)
+           console.log(data)
+        })
       } catch (error) {
         console.log(error)
       }
